@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block head%}
+        <script type ="text/javascript">
+            function liveBusqueda(){
+               var nom = $("#buscar").val();
+               var pape = $("#buscar2").val();
+               var sape = $("#buscar3").val();
+                $.ajax({
+                    url : '/siieb/buscaNombre/',
+                    datatype: 'html',
+                    data:({nombre:nom,papellido:pape,sapellido:sape}),/*Json*/
+                    type: 'POST',
+                    success: function(html){/*regresa ajax*/
+                        
+                        $("#resultados").html(html);/*regresa jquery, regresa ajax*/
+                    }
+                }
+            );
+            }
+	    function valida1(){
+                        var nom = $('#buscar').val();
+                        //alert('...');
+                $.ajax({
+                    url : '/siieb/valida1/',
+                    datatype: 'html',
+                    data:({nombre:nom}),
+                    type: 'POST',
+                    success: function(html){
+                        $("#mensaje").html(html);
+                    }
+                }
+            );
+	    }	
+        </script>
+{% endblock %}
+{% block body %}
+                        <h3>Busca por nombre</h3>
+        <table>
+        <tr>
+	<td><input type="text" id="buscar" name="buscar" onKeyUp="javascript:liveBusqueda();" onBlur="javascript:valida1();" ></td>
+        <td><input type="text" id="buscar2" name="buscar2" onKeyUp="javascript:liveBusqueda();" onBlur="javascript:valida2();" ></td>
+        <td><input type="text" id="buscar3" name="buscar3" onKeyUp="javascript:liveBusqueda();" onBlur="javascript:valida3();" ></td>
+        </tr>
+        <tr>
+	<td><div id="mensaje" name="mensaje" ></div></td>
+        <td><div id="mensaje2" name="mensaje2" ></div></td>
+        <td><div id="mensaje3" name="mensaje3" ></div></td>
+        </tr>
+        </table>
+               <br />
+        <div id="resultados">
+
+        </div>
+
+
+{% endblock body %}

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block head%}
+        <script type ="text/javascript">
+            function login(){
+               var usu = $("#usuario").val();
+               var pas = $("#password").val();
+                $.ajax({
+                    url : '/siieb/login/',
+                    datatype: 'json',
+                    data:({usuario:usu,password:pas}),/*Json*/
+                    type: 'POST',
+                    success: function(html){/*regresa ajax*/
+			alert(html);
+			if(html==0)
+			{
+			entra(usu,pas);
+			}
+			else
+			{
+                        $("#resultados").html(html);/*regresa jquery, regresa ajax*/
+			}
+                    }
+                }
+            );
+            }
+		function entra(usu,pas){
+               //var usu = $("#usuario").val();
+               //var pas = $("#password").val();
+                $.ajax({
+                    url : '/siieb/entra/',
+                    datatype: 'html',
+                    data:({usuario:usu,password:pas}),/*Json*/
+                    type: 'POST',
+                    success: function(html){/*regresa ajax*/
+                    }
+                }
+            );
+            }
+        </script>
+{% endblock %}
+{% block body %}
+                        <h3>Entrar</h3>
+        <table>
+        <tr>
+	<td>usuario<input type="text" id="usuario" name="usuario"  ></td>
+	<td>password<input type="password" id="password" name="password" ></td>
+        </tr>
+        <tr>
+	<td><div id="mensaje" name="mensaje" ></div></td>
+        </tr>
+        <tr><td><input type="button" id="entrar" name="entrar" value="Entrar" onClick="javascript:login();" ></td></tr>
+        </table>
+               <br />
+        <div id="resultados">
+
+        </div>
+
+
+{% endblock body %}
